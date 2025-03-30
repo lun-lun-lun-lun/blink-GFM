@@ -30,6 +30,7 @@ local EVENT_BODY = {
 	"RecieveInstances = Instances\n",
 	"RecieveInstanceCursor = 0\n",
 	"local Size = buffer.len(RecieveBuffer)\n",
+	"local startTime = os.clock()\n", --BLINKGFM CHANGE 
 	-- "if Size > 20000 then\n",
 	-- "	return error(`Event by {Player.Name} discarded for sending {Size}. How mean of you.`)\n",
 	-- "end\n",
@@ -1240,7 +1241,7 @@ function Generator.Generate(FileContext: Context, AbstractSyntaxTree: Parser.Bod
 
 	Reliables = Blocks.Connection(`Reliable.{Signal}`, Arguments)
 	Unreliables = Blocks.Connection(`Unreliable.{Signal}`, Arguments)
-
+	
 	Reliables:Lines(EVENT_BODY, 1)
 	Unreliables:Lines(EVENT_BODY, 1)
 
@@ -1249,19 +1250,26 @@ function Generator.Generate(FileContext: Context, AbstractSyntaxTree: Parser.Bod
 		Unreliables:Lines(EVENT_SYNC_VALIDATION, 1)
 	end
 
+	--BLINKGFM CHANGE 
+	if Options.MaxSize and Context == "Server" then
+		Reliables:Compare("Size", ">=", `{Options.MaxSize}`)
+			Reliables:Line("warn(`Deserialization for {Player.Name} DENIED; size exceeds {Options.MaxSize}.`)")
+			Reliables:Line("return")
+		Reliables:End()
+	end
+
+
 	Reliables = Reliables:While("RecieveCursor < Size")
 	Unreliables = Unreliables:While("RecieveCursor < Size")
+
+	---BLINKGFM CHANGE
+	if Options.MaxTime and Context == "Server" then
+		Reliables:Compare("os.clock() - startTime", ">=", `{Options.MaxTime}`)
+			Reliables:Line("warn(`Deserialization for {Player.Name} TIMED OUT; exceeded {os.clock() - startTime} seconds of CPU time.`)")
+			Reliables:Line("return")
+		Reliables:End()
+	end
 	
-	Reliables:Compare("if os.clock() - startTime", ">", "TimeLimit")
-	Reliables:Line("warn(`Deserialization for {Player.Name} timed out after exceeding {os.clock() - startTime} seconds of CPU time.`)")
-	Reliables:Line("return")
-	Reliables:Line("end")
-
-	Unreliables:Line("if os.clock() - startTime > TimeLimit then")
-	Unreliables:Line("warn(`Deserialization for {Player.Name} timed out after exceeding {os.clock() - startTime} seconds of CPU time.`)")
-	Unreliables:Line("return")
-	Unreliables:Line("end")
-
 	Types.u8.Read("Index", Reliables)
 	Types.u8.Read("Index", Unreliables)
 

@@ -9,11 +9,12 @@ An IDL compiler written in Luau for ROBLOX buffer networking
 
 
 # Edit: DDOS Protection
-Rudimentary CPU time check to stop 
-Put this: option MaxSerdexTime = some_number_here
-in your .blink file. This will 
-Most events take 0.0001 to 0.0002 seconds, but this time increases to like 0.005 when the server is really early. I'd recommend 1/1000 of a second.
-
+Rudimentary CPU time check to stop simple DDOS attacks
+In your blink file: /n
+option MaxTime = some_number_here
+option MaxSize = some_number_here /n
+MaxTime will stop the server's deserialization of a player's send if it >= MaxTime
+MaxSize ends the server's deserialization of a player's send if the buffer size >= MaxSize
 
 
 # The Original:
