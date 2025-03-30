@@ -15,7 +15,9 @@ option MaxTime = some_number_here
 option MaxSize = some_number_here /n
 MaxTime will stop the server's deserialization of a player's send if it >= MaxTime.
 MaxSize ends the server's deserialization of a player's send if the buffer size >= MaxSize.
-
+Credits to [Zap](https://zap.redblox.dev/) for the range and array syntax  
+Credits to [ArvidSilverlock](https://github.com/ArvidSilverlock) for the float16 implementation  
+Studio plugin auto completion icons are sourced from [Microsoft](https://github.com/microsoft/vscode-icons) and are under the [CC BY 4.0](https://github.com/microsoft/vscode-icons/blob/main/LICENSE) license.  
 
 # The Original:
 ## Performance
