@@ -7,6 +7,16 @@
 
 An IDL compiler written in Luau for ROBLOX buffer networking
 
+
+# Edit: DDOS Protection
+Rudimentary CPU time check to stop 
+Put this: option MaxSerdexTime = some_number_here
+in your .blink file. This will 
+Most events take 0.0001 to 0.0002 seconds, but this time increases to like 0.005 when the server is really early. I'd recommend 1/1000 of a second.
+
+
+
+## Original Stuff:
 # Performance
 Blink aims to generate the most performant and bandwidth-efficient code for your specific experience, but what does this mean?  
 

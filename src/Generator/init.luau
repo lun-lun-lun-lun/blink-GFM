@@ -30,6 +30,9 @@ local EVENT_BODY = {
 	"RecieveInstances = Instances\n",
 	"RecieveInstanceCursor = 0\n",
 	"local Size = buffer.len(RecieveBuffer)\n",
+	-- "if Size > 20000 then\n",
+	-- "	return error(`Event by {Player.Name} discarded for sending {Size}. How mean of you.`)\n",
+	-- "end\n",
 }
 
 local SYNC_VALIDATION_BODY = {
@@ -1248,6 +1251,17 @@ function Generator.Generate(FileContext: Context, AbstractSyntaxTree: Parser.Bod
 
 	Reliables = Reliables:While("RecieveCursor < Size")
 	Unreliables = Unreliables:While("RecieveCursor < Size")
+	
+	Reliables:Compare("if os.clock() - startTime", ">", "TimeLimit")
+	Reliables:Line("warn(`Deserialization for {Player.Name} timed out after exceeding {os.clock() - startTime} seconds of CPU time.`)")
+	Reliables:Line("return")
+	Reliables:Line("end")
+
+	Unreliables:Line("if os.clock() - startTime > TimeLimit then")
+	Unreliables:Line("warn(`Deserialization for {Player.Name} timed out after exceeding {os.clock() - startTime} seconds of CPU time.`)")
+	Unreliables:Line("return")
+	Unreliables:Line("end")
+
 	Types.u8.Read("Index", Reliables)
 	Types.u8.Read("Index", Unreliables)
 
