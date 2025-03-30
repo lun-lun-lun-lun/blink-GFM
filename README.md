@@ -10,7 +10,7 @@ An IDL compiler written in Luau for ROBLOX buffer networking
 
 # Edit: DDOS Protection
 Rudimentary CPU time check to stop simple DDOS attacks
-In your blink file: /n
+In your blink file:
 option MaxTime = some_number_here
 option MaxSize = some_number_here /n
 MaxTime will stop the server's deserialization of a player's send if it >= MaxTime
