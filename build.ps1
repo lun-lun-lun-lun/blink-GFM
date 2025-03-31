@@ -12,6 +12,7 @@ $version = [regex]::Match($versionContent, 'VERSION = "([^"]+)"').Groups[1].Valu
 $distPath = "dist/blink-gfm-$version"
 New-Item -ItemType Directory -Force -Path $distPath | Out-Null
 New-Item -ItemType Directory -Force -Path "$distPath/src" | Out-Null
+New-Item -ItemType Directory -Force -Path "$distPath/bin" | Out-Null
 
 # Copy source files
 Copy-Item -Path "src/*" -Destination "$distPath/src" -Recurse -Force
@@ -45,13 +46,13 @@ $version
 ### Using Rokit
 ```toml
 [tools]
-blink-gfm = "yourusername/blink-gfm@$version"
+blink-gfm = "lun-lun-lun-lun/blink-gfm@$version"
 ```
 
 ### Using Aftman
 ```toml
 [tools]
-blink-gfm = "yourusername/blink-gfm@$version"
+blink-gfm = "lun-lun-lun-lun/blink-gfm@$version"
 ```
 
 ## Usage
@@ -66,6 +67,20 @@ Set-Content -Path "$distPath/README.md" -Value $readmeContent
 
 # Copy LICENSE
 Copy-Item -Path "LICENSE" -Destination "$distPath/LICENSE" -Force
+
+# Create a dummy executable for Aftman (Windows batch file)
+$executableContent = @"
+@echo off
+echo This is a dummy executable for Aftman compatibility
+"@
+Set-Content -Path "$distPath/bin/blink-gfm.bat" -Value $executableContent
+
+# Create a dummy executable for Aftman (Unix shell script)
+$executableContent = @"
+#!/bin/sh
+echo "This is a dummy executable for Aftman compatibility"
+"@
+Set-Content -Path "$distPath/bin/blink-gfm" -Value $executableContent
 
 # Create zip archive
 $zipPath = "dist/blink-gfm-$version.zip"
