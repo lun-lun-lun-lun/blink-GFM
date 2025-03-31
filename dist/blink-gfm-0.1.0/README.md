@@ -10,13 +10,13 @@ A network communication library for Roblox games with additional security featur
 ### Using Rokit
 `	oml
 [tools]
-blink-gfm = "lun-lun-lun-lun/blink-gfm@0.1.0"
+blink-gfm = "yourusername/blink-gfm@0.1.0"
 `
 
 ### Using Aftman
 `	oml
 [tools]
-blink-gfm = "lun-lun-lun-lun/blink-gfm@0.1.0"
+blink-gfm = "yourusername/blink-gfm@0.1.0"
 `
 
 ## Usage
