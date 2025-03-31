@@ -69,7 +69,7 @@ return {
     -- Create README
     print("Creating README.md...")
     local readmeContent = [[
-# Blink Girlfriend Mode
+# Blink GFMode
 
 A network communication library for Roblox games with additional security features.
 
