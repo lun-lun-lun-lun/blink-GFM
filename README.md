@@ -16,6 +16,8 @@ In your .blink file:
 MaxTime will stop the server's deserialization of a player's send if it >= MaxTime  
 MaxSize ends the server's deserialization of a player's send if the buffer size >= MaxSize  
 
+adding a Virtual Cost system as well soon
+
 
 # The Original:
 ## Performance
