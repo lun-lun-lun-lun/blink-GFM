@@ -11,16 +11,17 @@ An IDL compiler written in Luau for ROBLOX buffer networking
 # Edit: DDOS Protection
 Rudimentary CPU time check to stop simple DDOS attacks  
 In your .blink file:  
-**option MaxTime = some_number_here**  
-**option MaxSize = some_number_here**  
-MaxTime will stop the server's deserialization of a player's send if it >= MaxTime  
+**option MaxTimeReliable = some_number_here**  
+**option MaxSizeUnreliable = some_number_here**  
+(and vice versa) 
+  
+MaxTime will stop the server's deserialization of a player's send if the time its taking is >= MaxTime  
 MaxSize ends the server's deserialization of a player's send if the buffer size >= MaxSize  
 
-adding a Virtual Cost system as well soon
 
 
-# The Original:
-## Performance
+# The Original: 
+## Performance  
 Blink aims to generate the most performant and bandwidth-efficient code for your specific experience, but what does this mean?  
 
 It means lower bandwidth usage directly resulting in **lower ping\*** experienced by players and secondly, it means **lower CPU usage** compared to more generalized networking solutions.
