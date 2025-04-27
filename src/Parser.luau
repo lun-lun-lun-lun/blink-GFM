@@ -87,6 +87,10 @@ export type Options = {
     WriteValidations: boolean?,
     ManualReplication: boolean?,
     RemoteScope: string?,
+    MaxTimeReliable: number?,
+    MaxTimeUnreliable: number?,
+    MaxSizeReliable: number?,
+    MaxSizeUnreliable: number?,
 }
 
 export type Body = Node<"Body", {
@@ -193,6 +197,10 @@ local OPTIONS: {[string]: Lexer.Types} = {
     WriteValidations = "Boolean",
     ManualReplication = "Boolean",
     RemoteScope = "String",
+    MaxTimeReliable = "Number",
+    MaxTimeUnreliable = "Number",
+    MaxSizeReliable = "Number",
+    MaxSizeUnreliable = "Number",
 }
 
 local EVENT: {EventOption} = {

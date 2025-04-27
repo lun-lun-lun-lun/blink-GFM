@@ -71,6 +71,8 @@ local TOKENS = {
     {"^%[", "OpenBrackets"},
     {"^%]", "CloseBrackets"},
 
+    {("^" .. NUMBER), "Number"},
+
     --> String patterns
     {"^\"\"", function(Toke: string)
         return "String", ""
