@@ -42,7 +42,6 @@ local RESET_DATA = {
 	"RecieveBuffer = OldRecieveBuffer\n",
 	"RecieveInstances = OldRecieveInstances\n",
 	"RecieveInstanceCursor = OldRecieveInstanceCursor\n",
-	--"warn(`Remote cancelled.`)\n",
 	"return\n",
 }
 
@@ -1260,17 +1259,17 @@ function Generator.Generate(FileContext: Context, AbstractSyntaxTree: Parser.Bod
 		Unreliables:Lines(EVENT_SYNC_VALIDATION, 1)
 	end
 
-	Noop.Push(`--PLS!`)
+	
 	--BLINKGFM CHANGE 
 	if Options.MaxSizeReliable and Context == "Server" then
 		Reliables:Compare("Size", `{Options.MaxSizeReliable}`, "GreaterOrEquals")
-			Reliables:Lines(RESET_DATA, 2)
-		Reliables:End()
+			:Lines(RESET_DATA, 2)
+		:End()
 	end
 	if Options.MaxSizeUnreliable and Context == "Server" then
 		Unreliables:Compare("Size", `{Options.MaxSizeUnreliable}`, "GreaterOrEquals")
-			Unreliables:Lines(RESET_DATA, 2)
-		Unreliables:End()
+			:Lines(RESET_DATA, 2)
+		:End()
 	end
 
 
@@ -1279,14 +1278,14 @@ function Generator.Generate(FileContext: Context, AbstractSyntaxTree: Parser.Bod
 
 	---BLINKGFM CHANGE
 	if Options.MaxTimeReliable and Context == "Server" then
-		Reliables:Compare("os.clock() - startTime", `{Options.MaxTimeReliable}`, "GreaterOrEquals")
-			Reliables:Lines(RESET_DATA, 3)
-		Reliables:End()
+		Reliables:Compare("os.clock() - StartTime", `{Options.MaxTimeReliable}`, "GreaterOrEquals")
+			:Lines(RESET_DATA, 3)
+		:End()
 	end
 	if Options.MaxTimeUnreliable and Context == "Server" then
-		Unreliables:Compare("os.clock() - startTime", `{Options.MaxTimeUnreliable}`, "GreaterOrEquals")
-			Unreliables:Lines(RESET_DATA, 3)
-		Unreliables:End()
+		Unreliables:Compare("os.clock() - StartTime", `{Options.MaxTimeUnreliable}`, "GreaterOrEquals")
+			:Lines(RESET_DATA, 3)
+		:End()
 	end
 	
 	Types.u8.Read("Index", Reliables)
